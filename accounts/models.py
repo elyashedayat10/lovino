@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-
+from django_extensions.db.models import TimeStampedModel
 from .managers import MyUserManager
 
 
@@ -28,3 +28,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class OtpCode(TimeStampedModel):
+    phone_number = models.CharField(max_length=11)
+    code = models.CharField(max_length=6)

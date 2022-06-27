@@ -1,7 +1,5 @@
 from django.urls import include, path
 
-from accounts.api.urls import urlpatterns
-
-app_name = "accounts"
+from activity.api.urls import urlpatterns
 
 urlpatterns = [path("api/", include(urlpatterns))]

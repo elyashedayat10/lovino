@@ -3,13 +3,15 @@ import datetime
 import jdatetime
 from django.conf import settings
 from django.core.cache import cache
-from django.core.validators import MaxValueValidator, MinValueValidator, ValidationError
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    ValidationError)
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
 from django_jalali.db import models as jmodels
 
 user = settings.AUTH_USER_MODEL
 from accounts.models import User
+
 
 # Create your models here.
 
@@ -33,6 +35,7 @@ class Profile(TimeStampedModel):
         blank=True,
         max_length=125,
         unique=True,
+        null=True
     )
     province = models.CharField(
         blank=True,
@@ -61,20 +64,22 @@ class Profile(TimeStampedModel):
     )
     birthdate = jmodels.jDateField(
         blank=True,
-    )
-    age = models.PositiveIntegerField(
-        blank=True,
-        validators=[MinValueValidator, MaxValueValidator],
+        null=True,
     )
     is_active = models.BooleanField(default=True)
 
     objects = ActiveProfileManager()
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
+        if not self.user_name:
+            self.user_name = None
+        super().save(*args, **kwargs)
+
+    @property
+    def get_age(self):
         if self.birthdate:
             user_age = jdatetime.date.today() - self.birthdate
-            self.age = user_age.year
-            return super(Profile, self).save(**kwargs)
+            return user_age.year
 
 
 class Image(models.Model):

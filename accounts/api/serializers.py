@@ -6,5 +6,5 @@ class AuthSerializer(serializers.Serializer):
 
 
 class VerifySerializer(serializers.Serializer):
-    phone_number = serializers.EmailField(max_length=11)
+    phone_number = serializers.CharField(max_length=11)
     code = serializers.CharField(max_length=6)

@@ -4,7 +4,9 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from profiles.models import Image, Profile
 
 from .forms import UserChangeForm, UserCreationForm
-from .models import User
+from .models import OtpCode, User
+
+admin.site.register(OtpCode)
 
 
 # Register your models here.

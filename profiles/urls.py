@@ -1,8 +1,8 @@
 from django.urls import include, path
 
-from accounts.api.urls import urlpatterns
+from profiles.api.urls import urlpatterns
 
-app_name = "accounts"
+app_name = "profiles"
 
 urlpatterns = [
     path("api/", include(urlpatterns)),

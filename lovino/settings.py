@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "braces",
     "rest_framework",
+    "rest_framework.authtoken",
     # custom
     "accounts.apps.AccountsConfig",
     "profiles.apps.ProfilesConfig",

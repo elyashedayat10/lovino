@@ -1,8 +1,8 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
-
 from ..models import Block, Pined, ReportedUser
 from .serializers import ReportedUserSerializers
+from profiles.models import Profile
 
 
 class BlockRetravie(generics.RetrieveAPIView):
@@ -18,6 +18,15 @@ class BlockCreateApivIew(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class ReportListApiView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = ReportedUserSerializers
+
+    def get(self, request, *args, **kwargs):
+        reported_list = ReportedUser.objects.all(from_user=request.user)
+        reported_profile = Profile.objects.filter(user__in=reported_list.va)
 
 
 class ReportCreateApiView(generics.GenericAPIView):

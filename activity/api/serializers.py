@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import ReportedUser
+from ..models import ReportedUser, Block
 
 
 class ReportedUserSerializers(serializers.ModelSerializer):
@@ -19,3 +19,9 @@ class ReportedUserSerializers(serializers.ModelSerializer):
     #     if not isinstance(obj,ReportedUser):
     #         return None
     #     return obj.reporteds_usere
+
+
+class BlockCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Block
+        fields = ("to_user",)
